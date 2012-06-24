@@ -39,8 +39,19 @@
       %form#search{method: "get", action: "/search", autocomplete: "off"}
         %fieldset
           %input{name: "query", type: "text", autofocus: ""}
-          %p#loading
+          %span#loading
             Searching&hellip;
+
+    %article#wtf
+      %h3
+        What the &hellip;?
+      %p
+        Flickr allows you to filter out NSFW images.  But what if you want to
+        filter out SFW images?  Use Rubber Duckie, find filth.
+      %p
+        Try it out.  Search for &ldquo;sandal&rdquo; &mdash; and find a photo
+        of a sandal hanging off of some dude&rsquo;s erection.  I&rsquo;m not
+        kidding.
 
     %article
       #results
@@ -61,6 +72,7 @@
         <a href="http://www.ruby-lang.org/en/">Ruby</a>,
         <a href="http://redis.io/">Redis</a>,
         <a href="http://www.sinatrarb.com/">Sinatra</a>,
+        <a href="http://www.heroku.com/">Heroku</a>,
         <a href="http://www.flickr.com/">Flickr</a>, and
         Rule 34
 

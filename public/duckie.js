@@ -89,6 +89,7 @@ Duckie = {
     $("[name='query']").val('');
 
     $('#loading').show();
+    $('#wtf').hide();
     $('#results').empty();
     $('#no-results').hide();
     $('#broken').hide();

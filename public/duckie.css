@@ -82,7 +82,7 @@ input {
   font: 16px "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, arial, sans-serif;
   margin-top: 0.75em;
   padding: 0.4em 0.2em;
-  width: 480px;
+  width: 450px;
 }
 
 #loading {
@@ -104,6 +104,12 @@ input {
   } to {
     -webkit-transform: rotate(360deg);
   }
+}
+
+article p {
+  padding-top: 1.5em;
+  line-height: 150%;
+  width: 450px;
 }
 
 #templates {
