@@ -40,6 +40,7 @@ Duckie = {
 
     // Wire up the event handlers.
     $('#search').submit(this._search);
+    $(document).keydown(this._keyDown);
     $(document).keypress(this._keyPress);
     $(document).scroll(this._scroll);
 
@@ -125,6 +126,12 @@ Duckie = {
     result.appendTo('#results');
   },
 
+
+  _keyDown: function(eventObject) {
+    if (eventObject.keyCode >= 37 && eventObject.keyCode <= 40) {
+      $("[name='query']").blur();
+    }
+  },
 
   _keyPress: function(eventObject) {
     $.facebox.close();
