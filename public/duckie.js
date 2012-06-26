@@ -23,7 +23,7 @@ Duckie = {
   _TIMEOUT: 10000,
 
   _template: null,
-  _brokenTimer: null,
+  _timer: null,
   _jqXHR: null,
   _initialized: false,
 
@@ -60,7 +60,7 @@ Duckie = {
 
     Duckie._abort();
     Duckie._preSearch(query);
-    Duckie._brokenTimer = window.setTimeout(Duckie._broken, Duckie._TIMEOUT);
+    Duckie._timer = window.setTimeout(Duckie._broken, Duckie._TIMEOUT);
     Duckie._jqXHR = $.getJSON('/search', {query: query}, function(data) {
         Duckie._abort();
         Duckie._postSearch(data);
@@ -72,9 +72,9 @@ Duckie = {
 
 
   _abort: function() {
-    if (this._brokenTimer !== null) {
-      window.clearTimeout(this._brokenTimer);
-      this._brokenTimer = null;
+    if (this._timer !== null) {
+      window.clearTimeout(this._timer);
+      this._timer = null;
     }
 
     if (this._jqXHR !== null) {
