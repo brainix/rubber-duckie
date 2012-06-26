@@ -30,6 +30,7 @@ Duckie = {
     ['sandal', 'dude with a sandal hanging off his erection'],
     ['office', 'dude wearing pantyhose in his office'],
     ['popsicle', 'fat chick in panties, licking a popsicle'],
+    ['sand', 'naked chick with sand handprints on her tits and pussy'],
   ],
   _initialized: false,
 
