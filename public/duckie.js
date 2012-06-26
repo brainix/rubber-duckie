@@ -26,18 +26,10 @@ Duckie = {
   _timer: null,
   _jqXHR: null,
   _examples: [
-    ['sandal', 'dude with a sandal hanging off his erection'],
-    ['book', 'naked chick organizing her bookshelf'],
-    ['ice', 'naked chick standing on a glacier'],
-    ['office', 'dude wearing pantyhose in his office'],
     ['plate', 'dinner plate decorated with a drawing of garfield with huge boobs'],
-    ['playground', 'topless chick lying across a jungle gym'],
-    ['soccer', 'topless chick wearing soccer shoes'],
-    ['tree', 'naked chick hugging a tree'],
+    ['sandal', 'dude with a sandal hanging off his erection'],
+    ['office', 'dude wearing pantyhose in his office'],
     ['popsicle', 'fat chick in panties, licking a popsicle'],
-    ['football', 'naked chick in a pool, posing with her dog and a football'],
-    ['Scooby Doo', 'Scooby Doo fucking Lois from Family Guy'],
-    ['shell', 'topless girl who&rsquo;s found a seashell'],
   ],
   _initialized: false,
 
@@ -48,14 +40,14 @@ Duckie = {
       return false;
     }
 
-    this._example();
+    this._showExample();
 
     // Get the photo result template.
     this._template = $('#result').remove().html();
     $('#templates').remove()
 
     // Wire up the event handlers.
-    $('#example-query').click(this._try);
+    $('#example-query').click(this._tryExample);
     $('#search').submit(this._search);
     $(document).keydown(this._keyDown);
     $(document).keypress(this._keyPress);
@@ -68,7 +60,7 @@ Duckie = {
   },
 
 
-  _example: function() {
+  _showExample: function() {
     var index = Math.floor(Math.random() * this._examples.length);
     var example = this._examples[index];
     var query = example[0];
@@ -79,7 +71,7 @@ Duckie = {
   },
 
 
-  _try: function() {
+  _tryExample: function() {
     var query = $('#example-query').html();
     $("[name='query']").val(query);
     Duckie._search();
@@ -94,11 +86,11 @@ Duckie = {
       return false;
     }
 
-    Duckie._abort();
+    Duckie._abortSearch();
     Duckie._preSearch(query);
-    Duckie._timer = window.setTimeout(Duckie._broken, Duckie._TIMEOUT);
+    Duckie._timer = window.setTimeout(Duckie._brokenSearch, Duckie._TIMEOUT);
     Duckie._jqXHR = $.getJSON('/search', {query: query}, function(data) {
-        Duckie._abort();
+        Duckie._abortSearch();
         Duckie._postSearch(data);
       }
     );
@@ -107,7 +99,7 @@ Duckie = {
   },
 
 
-  _abort: function() {
+  _abortSearch: function() {
     if (this._timer !== null) {
       window.clearTimeout(this._timer);
       this._timer = null;
@@ -133,8 +125,8 @@ Duckie = {
   },
 
 
-  _broken: function() {
-    Duckie._abort();
+  _brokenSearch: function() {
+    Duckie._abortSearch();
     $('#loading').hide();
     $('#broken').show();
   },
