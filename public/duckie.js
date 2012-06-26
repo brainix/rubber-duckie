@@ -25,6 +25,20 @@ Duckie = {
   _template: null,
   _timer: null,
   _jqXHR: null,
+  _examples: [
+    ['sandal', 'dude with a sandal hanging off his erection'],
+    ['book', 'naked chick organizing her bookshelf'],
+    ['ice', 'naked chick standing on a glacier'],
+    ['office', 'dude wearing pantyhose in his office'],
+    ['plate', 'dinner plate decorated with a drawing of garfield with huge boobs'],
+    ['playground', 'topless chick lying across a jungle gym'],
+    ['soccer', 'topless chick wearing soccer shoes'],
+    ['tree', 'naked chick hugging a tree'],
+    ['popsicle', 'fat chick in panties, licking a popsicle'],
+    ['football', 'naked chick in a pool, posing with her dog and a football'],
+    ['Scooby Doo', 'Scooby Doo fucking Lois from Family Guy'],
+    ['shell', 'topless girl who&rsquo;s found a seashell'],
+  ],
   _initialized: false,
 
 
@@ -34,11 +48,14 @@ Duckie = {
       return false;
     }
 
+    this._example();
+
     // Get the photo result template.
     this._template = $('#result').remove().html();
     $('#templates').remove()
 
     // Wire up the event handlers.
+    $('#example-query').click(this._try);
     $('#search').submit(this._search);
     $(document).keydown(this._keyDown);
     $(document).keypress(this._keyPress);
@@ -48,6 +65,25 @@ Duckie = {
 
     // We're now initialized.
     return this._initialized = true;
+  },
+
+
+  _example: function() {
+    var index = Math.floor(Math.random() * this._examples.length);
+    var example = this._examples[index];
+    var query = example[0];
+    var result = example[1];
+    $('#example-query').html(query);
+    $('#example-result').html(result);
+    $('#example').slideDown();
+  },
+
+
+  _try: function() {
+    var query = $('#example-query').html();
+    $("[name='query']").val(query);
+    Duckie._search();
+    return false;
   },
 
 
