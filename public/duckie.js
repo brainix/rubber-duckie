@@ -133,6 +133,7 @@ Duckie = {
     }
   },
 
+
   _keyPress: function(eventObject) {
     $.facebox.close();
     window.scrollTo(0, 0);
