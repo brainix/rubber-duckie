@@ -166,7 +166,7 @@ img.photo:hover {
   max-height: 480px;
 }
 
-#example, #no-results, #broken {
+#no-results, #broken {
   display: none;
 }
 

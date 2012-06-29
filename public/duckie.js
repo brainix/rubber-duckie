@@ -68,7 +68,6 @@ Duckie = {
     var result = example[1];
     $('#example-query').html(query);
     $('#example-result').html(result);
-    $('#example').slideDown();
   },
 
 
