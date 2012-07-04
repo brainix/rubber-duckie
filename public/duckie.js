@@ -106,12 +106,12 @@ Duckie = {
 
 
   _abortSearch: function() {
-    if (this._timer !== null) {
+    if (this._timer) {
       window.clearTimeout(this._timer);
       this._timer = null;
     }
 
-    if (this._jqXHR !== null) {
+    if (this._jqXHR) {
       this._jqXHR.abort();
       this._jqXHR = null;
     }
@@ -139,14 +139,14 @@ Duckie = {
 
 
   _postSearch: function(results) {
-    if (results.length !== 0) {
+    if (results.length) {
       $("[name='query']").blur();
     }
 
     $('#loading').hide();
     $.each(results, this._showResult);
     $('.lazy').lazyload();
-    if (results.length === 0) {
+    if (!results.length) {
       $('#no-results').show();
     }
   },
@@ -178,7 +178,7 @@ Duckie = {
   _scroll: function(eventObject) {
     $.facebox.close();
     var position = $('html').position();
-    if (position.left === 0 && position.top === 0) {
+    if (!position.left && !position.top) {
       $("[name='query']").focus();
     }
   }
