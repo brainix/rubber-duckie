@@ -35,39 +35,41 @@ module Bing
   @@logger = Logger.new(STDOUT)
   @@logger.level = Logger::INFO
 
-  def self.unsafe_search(query)
-    threads, rated_r_only = [], []
-    time = Timer.time do
-      threads = new_threads(query)
-      rated_r, rated_pg13 = join_threads(threads)
-      rated_r_only = rated_r.reject { |photo| rated_pg13.include? photo }
-      rated_r_only = rated_r_only[0 .. MAX_RESULTS - 1]
+  class << self
+    def unsafe_search(query)
+      threads, rated_r_only = [], []
+      time = Timer.time do
+        threads = new_threads(query)
+        rated_r, rated_pg13 = join_threads(threads)
+        rated_r_only = rated_r.reject { |photo| rated_pg13.include? photo }
+        rated_r_only = rated_r_only[0 .. MAX_RESULTS - 1]
+      end
+      @@logger.info("#{query}: got #{rated_r_only.size} Rated R photos in #{'%.2f' % time} seconds")
+      rated_r_only
     end
-    @@logger.info("#{query}: got #{rated_r_only.size} Rated R photos in #{'%.2f' % time} seconds")
-    rated_r_only
-  end
 
-  def self.new_threads(query)
-    threads = []
-    [false, true].each do |safe|
-      0.step((NUM_PAGES - 1) * RESULTS_PER_PAGE, RESULTS_PER_PAGE) do |offset|
-        threads << Thread.new do
-          Thread.current[:safe] = safe
-          Thread.current[:photos] = BingImages.search(query, safe, offset)
+    def new_threads(query)
+      threads = []
+      [false, true].each do |safe|
+        0.step((NUM_PAGES - 1) * RESULTS_PER_PAGE, RESULTS_PER_PAGE) do |offset|
+          threads << Thread.new do
+            Thread.current[:safe] = safe
+            Thread.current[:photos] = BingImages.search(query, safe, offset)
+          end
         end
       end
+      threads
     end
-    threads
-  end
 
-  def self.join_threads(threads)
-    rated_r, rated_pg13 = [], []
-    threads.each do |thread|
-      thread.join
-      rated_r += thread[:photos] unless thread[:safe]
-      rated_pg13 += thread[:photos] if thread[:safe]
+    def join_threads(threads)
+      rated_r, rated_pg13 = [], []
+      threads.each do |thread|
+        thread.join
+        rated_r += thread[:photos] unless thread[:safe]
+        rated_pg13 += thread[:photos] if thread[:safe]
+      end
+      return rated_r, rated_pg13
     end
-    return rated_r, rated_pg13
   end
 end
 

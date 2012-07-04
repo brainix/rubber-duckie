@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 #-----------------------------------------------------------------------------#
 #   timer.rb                                                                  #
 #                                                                             #
@@ -20,9 +22,17 @@
 
 
 module Timer
-  def self.time
-    start = Time.now
-    yield
-    Time.now - start
+  class << self
+    def time
+      start = Time.now
+      yield
+      Time.now - start
+    end
   end
+end
+
+
+if __FILE__ == $0
+  time = Timer.time { sleep(3) }
+  puts("slept for #{time} seconds")
 end

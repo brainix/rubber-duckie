@@ -25,13 +25,15 @@ require 'redis'
 
 
 module Cache
-  def self.lookup(key)
-    value = REDIS.get(key)
-    return value unless value.nil?
+  class << self
+    def lookup(key)
+      value = REDIS.get(key)
+      return value unless value.nil?
 
-    value = yield
-    REDIS.set(key, value)
-    value
+      value = yield
+      REDIS.set(key, value)
+      value
+    end
   end
 end
 

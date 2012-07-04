@@ -36,36 +36,38 @@ module Flickr
 
 
   module Authorization
-    def self.authorize
-      token, auth_url = get_auth_url
-      verifier = verify(auth_url)
-      log_in(token, verifier)
-    end
+    class << self
+      def authorize
+        token, auth_url = get_auth_url
+        verifier = verify(auth_url)
+        log_in(token, verifier)
+      end
 
-    def self.get_auth_url
-      FlickRaw.api_key = API_KEY
-      FlickRaw.shared_secret = API_SECRET
-      token = flickr.get_request_token
-      auth_url = flickr.get_authorize_url(token['oauth_token'])
-      return token, auth_url
-    end
+      def get_auth_url
+        FlickRaw.api_key = API_KEY
+        FlickRaw.shared_secret = API_SECRET
+        token = flickr.get_request_token
+        auth_url = flickr.get_authorize_url(token['oauth_token'])
+        return token, auth_url
+      end
 
-    def self.verify(auth_url)
-      puts '1. Load: ' + auth_url
-      puts '2. Authorize Rubber Duckie'
-      puts '3. Copy/paste the authorization number here:'
-      verifier = gets.strip
-      verifier
-    end
+      def verify(auth_url)
+        puts '1. Load: ' + auth_url
+        puts '2. Authorize Rubber Duckie'
+        puts '3. Copy/paste the authorization number here:'
+        verifier = gets.strip
+        verifier
+      end
 
-    def self.log_in(token, verifier)
-      oauth_token = token['oauth_token']
-      oauth_token_secret = token['oauth_token_secret']
-      flickr.get_access_token(oauth_token, oauth_token_secret, verifier)
-      login = flickr.test.login
-      puts 'Username: ' + login.username
-      puts 'Access token: ' + flickr.access_token
-      puts 'Access secret: ' + flickr.access_secret
+      def log_in(token, verifier)
+        oauth_token = token['oauth_token']
+        oauth_token_secret = token['oauth_token_secret']
+        flickr.get_access_token(oauth_token, oauth_token_secret, verifier)
+        login = flickr.test.login
+        puts 'Username: ' + login.username
+        puts 'Access token: ' + flickr.access_token
+        puts 'Access secret: ' + flickr.access_secret
+      end
     end
   end
 
@@ -82,62 +84,64 @@ module Flickr
     @@logger = Logger.new(STDOUT)
     @@logger.level = Logger::INFO
 
-    def self.log_in
-      FlickRaw.api_key = API_KEY
-      FlickRaw.shared_secret = API_SECRET
-      flickr.access_token = ACCESS_TOKEN
-      flickr.access_secret = ACCESS_SECRET
-      login = flickr.test.login
-      login
-    end
+    class << self
+      def log_in
+        FlickRaw.api_key = API_KEY
+        FlickRaw.shared_secret = API_SECRET
+        flickr.access_token = ACCESS_TOKEN
+        flickr.access_secret = ACCESS_SECRET
+        login = flickr.test.login
+        login
+      end
 
-    def self.unsafe_search(query)
-      results = []
-      time = Timer.time do
-        threads, rated_r, rated_pg13, rated_pg = [], [], [], []
-        ['rated_r', 'rated_pg13', 'rated_pg'].each do |rating|
+      def unsafe_search(query)
+        results = []
+        time = Timer.time do
+          threads, rated_r, rated_pg13, rated_pg = [], [], [], []
+          ['rated_r', 'rated_pg13', 'rated_pg'].each do |rating|
+            threads << Thread.new do
+              eval("#{rating} = search(query, '#{rating}'.to_sym)")
+            end
+          end
+          threads.each { |thread| thread.join }
+
+          rated_r_only = rated_r - rated_pg13
+          rated_pg13_only = rated_pg13 - rated_pg
+          results = rated_r_only + rated_pg13_only
+          results = results[0 .. MAX_RESULTS - 1]
+          results = ids_to_urls(results)
+          results.map! { |result| { thumbnail: result, full_size: result } }
+        end
+        @@logger.info("#{query}: got #{results.size} Rated R and PG-13 photos in #{'%.2f' % time} seconds")
+        results
+      end
+
+      def search(query, mpaa_rating)
+        results = flickr.photos.search(
+          text: query,
+          sort: 'relevance',
+          safe_search: MPAA_RATING_TO_FLICKR_SAFE_SEARCH_VALUE[mpaa_rating],
+          per_page: '500',
+        )
+        ids = results.map { |result| result['id'] }
+        ids
+      end
+
+      def ids_to_urls(ids)
+        threads, urls = [], []
+        (0 .. ids.size - 1).each do |index|
           threads << Thread.new do
-            eval("#{rating} = search(query, '#{rating}'.to_sym)")
+            info = flickr.photos.getInfo(photo_id: ids[index])
+            url = FlickRaw.url(info)
+            Thread.current[:output] = url
           end
         end
-        threads.each { |thread| thread.join }
-
-        rated_r_only = rated_r - rated_pg13
-        rated_pg13_only = rated_pg13 - rated_pg
-        results = rated_r_only + rated_pg13_only
-        results = results[0 .. MAX_RESULTS - 1]
-        results = ids_to_urls(results)
-        results.map! { |result| { thumbnail: result, full_size: result } }
-      end
-      @@logger.info("#{query}: got #{results.size} Rated R and PG-13 photos in #{'%.2f' % time} seconds")
-      results
-    end
-
-    def self.search(query, mpaa_rating)
-      results = flickr.photos.search(
-        text: query,
-        sort: 'relevance',
-        safe_search: MPAA_RATING_TO_FLICKR_SAFE_SEARCH_VALUE[mpaa_rating],
-        per_page: '500',
-      )
-      ids = results.map { |result| result['id'] }
-      ids
-    end
-
-    def self.ids_to_urls(ids)
-      threads, urls = [], []
-      (0 .. ids.size - 1).each do |index|
-        threads << Thread.new do
-          info = flickr.photos.getInfo(photo_id: ids[index])
-          url = FlickRaw.url(info)
-          Thread.current[:output] = url
+        threads.each do |thread|
+          thread.join
+          urls << thread[:output]
         end
+        urls
       end
-      threads.each do |thread|
-        thread.join
-        urls << thread[:output]
-      end
-      urls
     end
   end
 end
