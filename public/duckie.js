@@ -56,9 +56,12 @@ Duckie = {
     // Wire up the event handlers.
     $('#example-query').click(this._tryExample);
     $('#search').submit(this._search);
-    $(document).keydown(this._keyDown);
-    $(document).keypress(this._keyPress);
-    $(document).scroll(this._scroll);
+
+    // These were a bit too clever for our own good.  They make the user
+    // experience nice on desktop, but broken on mobile.  :-(
+    // $(document).keydown(this._keyDown);
+    // $(document).keypress(this._keyPress);
+    // $(document).scroll(this._scroll);
 
     $('#loading').hide();
 
