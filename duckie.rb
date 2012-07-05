@@ -32,8 +32,7 @@ Flickr::Search.log_in
 
 
 configure do
-  url = ENV['REDISTOGO_URL']
-  url = 'http://localhost:6379/' if url.nil?
+  url = ENV['REDISTOGO_URL'] || 'http://localhost:6379/'
   uri = URI.parse(url)
   REDIS = Redis.new(host: uri.host, port: uri.port, password: uri.password)
 end
