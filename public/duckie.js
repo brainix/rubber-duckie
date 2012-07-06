@@ -20,12 +20,7 @@
 
 
 Duckie = {
-  _TIMEOUT: 10000,
-
-  _template: null,
-  _timer: null,
-  _jqXHR: null,
-  _examples: [
+  _EXAMPLES: [
     ['plate', 'dinner plate decorated with a drawing of garfield with huge boobs'],
     ['scissors', 'naked chick on the left, and a shadow of scissors on the right, illustrating symmetry'],
     ['tweezers', 'topless chick in a bandana, pulling down her pants and tweezing her pubes'],
@@ -38,6 +33,12 @@ Duckie = {
     ['puppy', 'dude in bondage gear role playing as a puppy'],
     ['office', 'dude wearing pantyhose in his office'],
   ],
+
+  _TIMEOUT: 10000,
+
+  _template: null,
+  _timer: null,
+  _jqXHR: null,
   _initialized: false,
 
 
@@ -71,8 +72,8 @@ Duckie = {
 
 
   _showExample: function() {
-    var index = Math.floor(Math.random() * this._examples.length);
-    var example = this._examples[index];
+    var index = Math.floor(Math.random() * this._EXAMPLES.length);
+    var example = this._EXAMPLES[index];
     var query = example[0];
     var result = example[1];
     $('#example-query').html(query);
