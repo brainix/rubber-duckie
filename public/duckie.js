@@ -39,16 +39,11 @@ Duckie = {
   _template: null,
   _timer: null,
   _jqXHR: null,
-  _initialized: false,
 
 
   init: function() {
-    if (this._initialized) {
-      // We'd previously been initialized.
-      return false;
-    }
-
     this._showExample();
+    $('#loading').hide();
 
     // Get the photo result template.
     this._template = $('#result').remove().html();
@@ -57,17 +52,15 @@ Duckie = {
     // Wire up the event handlers.
     $('#example-query').click(this._tryExample);
     $('#search').submit(this._search);
+    $(document).keydown(this._keyDown);
+    $(document).keypress(this._keyPress);
+    $(document).scroll(this._scroll);
 
-    // These were a bit too clever for our own good.  They make the user
-    // experience nice on desktop, but broken on mobile.  :-(
-    // $(document).keydown(this._keyDown);
-    // $(document).keypress(this._keyPress);
-    // $(document).scroll(this._scroll);
-
-    $('#loading').hide();
-
-    // We're now initialized.
-    return this._initialized = true;
+    var query = location.hash.slice(1);
+    if (query) {
+      query = decodeURIComponent(query);
+      this._doSearch(query);
+    }
   },
 
 
@@ -83,9 +76,14 @@ Duckie = {
 
   _tryExample: function() {
     var query = $('#example-query').html();
+    Duckie._doSearch(query);
+    return false;
+  },
+
+
+  _doSearch: function(query) {
     $("[name='query']").val(query);
     Duckie._search();
-    return false;
   },
 
 
@@ -123,6 +121,7 @@ Duckie = {
 
 
   _preSearch: function(query) {
+    location.replace('#' + encodeURIComponent(query));
     document.title = 'rubber duckie - ' + query;
     $('.query').html(query);
     $("[name='query']").val('');
@@ -185,7 +184,7 @@ Duckie = {
     if (!position.left && !position.top) {
       $("[name='query']").focus();
     }
-  }
+  },
 };
 
 
