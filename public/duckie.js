@@ -98,10 +98,9 @@ Duckie = {
     Duckie._preSearch(query);
     Duckie._timer = window.setTimeout(Duckie._brokenSearch, Duckie._TIMEOUT);
     Duckie._jqXHR = $.getJSON('/search', {query: query}, function(data) {
-        Duckie._abortSearch();
-        Duckie._postSearch(data);
-      }
-    );
+      Duckie._abortSearch();
+      Duckie._postSearch(data);
+    });
 
     return false;
   },
