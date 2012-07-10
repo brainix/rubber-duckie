@@ -54,9 +54,6 @@ Duckie = {
     // Wire up the event handlers.
     $('#example-query').click(this._tryExample);
     $('#search').submit(this._search);
-    $(document).keydown(this._keyDown);
-    $(document).keypress(this._keyPress);
-    $(document).scroll(this._scroll);
 
     var query = location.hash.slice(1);
     if (query) {
@@ -162,31 +159,6 @@ Duckie = {
     result.find('a.photo').facebox();
     result.find('a.photo img.photo').attr('data-original', value.thumbnail);
     result.appendTo('#results');
-  },
-
-
-  _keyDown: function(eventObject) {
-    if ($.inArray(eventObject.which, [37, 38, 39, 40])) {
-      $("[name='query']").blur();
-    }
-  },
-
-
-  _keyPress: function(eventObject) {
-    if (eventObject.which !== 32) {
-      $.facebox.close();
-      window.scrollTo(0, 0);
-      $("[name='query']").focus();
-    }
-  },
-
-
-  _scroll: function(eventObject) {
-    $.facebox.close();
-    var position = $('html').position();
-    if (!position.left && !position.top) {
-      $("[name='query']").focus();
-    }
   },
 };
 
