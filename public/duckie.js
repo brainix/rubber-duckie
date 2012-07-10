@@ -140,10 +140,6 @@ Duckie = {
 
 
   _postSearch: function(results) {
-    if (results.length) {
-      $("[name='query']").blur();
-    }
-
     $('#loading').hide();
     $.each(results, this._showResult);
     $('.lazy').lazyload();
