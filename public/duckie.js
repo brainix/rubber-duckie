@@ -26,6 +26,8 @@ Duckie = {
     ['tweezers', 'topless chick in a bandana, pulling down her pants and tweezing her pubes'],
     ['heart', 'chick making a heart shape with her fingers over her left tit'],
     ['sand', 'naked chick with sand handprints on her tits and pussy'],
+    ['umbrella', 'chick penetrating herself with an umbrella'],
+    ['candy', 'chick penetrating herself with a lollipop'],
     ['popsicle', 'fat chick in panties, licking a popsicle'],
     ['painful', 'chick getting her tongue severed'],
     ['sandal', 'dude with a sandal hanging off his erection'],
@@ -164,16 +166,18 @@ Duckie = {
 
 
   _keyDown: function(eventObject) {
-    if (eventObject.keyCode >= 37 && eventObject.keyCode <= 40) {
+    if ($.inArray(eventObject.which, [37, 38, 39, 40])) {
       $("[name='query']").blur();
     }
   },
 
 
   _keyPress: function(eventObject) {
-    $.facebox.close();
-    window.scrollTo(0, 0);
-    $("[name='query']").focus();
+    if (eventObject.which !== 32) {
+      $.facebox.close();
+      window.scrollTo(0, 0);
+      $("[name='query']").focus();
+    }
   },
 
 
