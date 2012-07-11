@@ -88,7 +88,7 @@ Duckie = {
 
   _search: function() {
     var query = $("[name='query']").val();
-    query = query.toLowerCase().trim().replace(/ +/g, ' ');
+    query = query.trim().replace(/ +/g, ' ');
     if (!query) {
       return false;
     }
@@ -120,7 +120,7 @@ Duckie = {
 
   _preSearch: function(query) {
     location.replace('#' + encodeURIComponent(query));
-    document.title = 'rubber duckie - ' + query;
+    document.title = 'Rubber Duckie - ' + query;
     $('.query').html(query);
     $("[name='query']").val('');
 
