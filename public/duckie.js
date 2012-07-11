@@ -52,6 +52,7 @@ Duckie = {
     $('#templates').remove()
 
     // Wire up the event handlers.
+    $('.home').click(this._wtf);
     $('#example-query').click(this._tryExample);
     $('#search').submit(this._search);
 
@@ -115,6 +116,23 @@ Duckie = {
       this._jqXHR.abort();
       this._jqXHR = null;
     }
+  },
+
+
+  _wtf: function() {
+    location.replace('#');
+    document.title = 'Rubber Duckie - Unsafe Photo Search';
+    $('.query').html('Unsafe Photo Search');
+    $("[name='query']").val('');
+
+    $('#loading').hide();
+    $('#wtf').show();
+    $('#results').empty();
+    $('#no-results').hide();
+    $('#broken').hide();
+
+    Duckie._showExample();
+    return false;
   },
 
 
