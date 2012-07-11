@@ -120,6 +120,8 @@ Duckie = {
 
 
   _wtf: function() {
+    // TODO: If there's an ongoing search at this point, abort it.
+
     location.replace('#');
     document.title = 'Rubber Duckie - Unsafe Photo Search';
     $('.query').html('Unsafe Photo Search');
