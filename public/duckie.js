@@ -120,7 +120,7 @@ Duckie = {
 
 
   _wtf: function() {
-    // TODO: If there's an ongoing search at this point, abort it.
+    Duckie._abortSearch();
 
     location.replace('#');
     document.title = 'Rubber Duckie - Unsafe Photo Search';
