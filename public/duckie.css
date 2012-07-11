@@ -92,7 +92,7 @@ input {
   -webkit-mask-box-image: url(/spinner.png);
   background-color: #516064;
   -webkit-animation: rotate-spinner;
-  -webkit-animation-duration: 1.5s;
+  -webkit-animation-duration: 1.1s;
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: linear;
 }
@@ -106,7 +106,7 @@ input {
 }
 
 article p {
-  padding-top: 1.5em;
+  padding-top: 1.1em;
   line-height: 150%;
   width: 450px;
 }
@@ -152,12 +152,12 @@ img.photo:hover {
 }
 
 .zoom:hover { 
-  -webkit-transform: scale(1.05);
-  -moz-transform: scale(1.05);
-  -o-transform: scale(1.05);
-  transform: scale(1.05);
-  -ms-transform: scale(1.05);
-  filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=1.05, M12=-0, M21=0, M22=1.05);
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  filter: progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=1.1, M12=-0, M21=0, M22=1.1);
 }
 
 #facebox img {
