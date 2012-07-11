@@ -23,7 +23,7 @@
 
 %html{lang: "en"}
   %head
-    %title Rubber Duckie - NSFW Photo Search
+    %title Rubber Duckie - Unsafe Photo Search
     %meta{charset: "utf-8"}
     %link{rel: "stylesheet", href: "/facebox.css"}
     %link{rel: "stylesheet", href: "/duckie.css"}
@@ -34,7 +34,7 @@
         %a{href: "/"}
           Rubber Duckie
       %h2.query
-        NSFW Photo Search
+        Unsafe Photo Search
 
     %article
       %form#search{method: "get", action: "/search", autocomplete: "off"}
@@ -45,10 +45,10 @@
 
     %article#wtf
       %h3
-        What the eff?
+        What is this?
       %p
-        Flickr allows you to filter out NSFW images.  But what if you want to
-        filter out SFW images?  Use Rubber Duckie.
+        Flickr allows you to filter out unsafe photos.  But what if you want to
+        filter out safe photos?  Use Rubber Duckie.
       %p#example
         Try it out.  Search for <a id="example-query" href="/"></a> &mdash; and
         find a photo of a <span id="example-result"></span>.
@@ -62,7 +62,7 @@
               %a.photo{rel: "facebox", href: "/spacer.gif"}
                 %img.photo.lazy{"data-original" => "/spacer.gif", src: "/spacer.gif", alt: "result"}
       %h3#no-results
-        No NSFW photos related to &ldquo;<span class="query"></span>&rdquo;
+        No unsafe photos related to &ldquo;<span class="query"></span>&rdquo;
       %h3#broken
         Try a different query
 
