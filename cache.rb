@@ -29,7 +29,7 @@ module Cache
     def lookup(key)
       value = REDIS.get(key)
       return value unless value.nil?
-
+      return value unless block_given?
       value = yield
       REDIS.set(key, value)
       value

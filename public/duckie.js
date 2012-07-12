@@ -33,6 +33,7 @@ Duckie = {
     ['plate', 'dinner plate decorated with a drawing of garfield with huge breasts'],
     ['popsicle', 'fat girl in panties, licking a popsicle'],
     ['puppy', 'man in bondage gear role playing as a puppy'],
+    ['punk', 'girl with a mohawk, with electrical tape on her nipples, wearing panties, chained up'],
     ['sand', 'naked girl with sand handprints on her tits and pussy'],
     ['sandal', 'man with a sandal hanging off his erection'],
     ['scissors', 'naked girl on the left, and a shadow of scissors on the right, illustrating symmetry'],
