@@ -182,8 +182,7 @@ Duckie = {
   _showResult: function(index, value) {
     var result = $(Duckie._template);
     result.find('a.photo').attr('href', value.full_size);
-    result.find('a.photo').facebox();
-    result.find('a.photo img.photo').attr('data-original', value.thumbnail);
+    result.find('a.photo img.photo').attr('src', value.thumbnail);
     result.appendTo('#results');
   },
 };

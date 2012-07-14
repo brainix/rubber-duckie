@@ -25,7 +25,6 @@
   %head
     %title Rubber Duckie - Unsafe Photo Search
     %meta{charset: "utf-8"}
-    %link{rel: "stylesheet", href: "/facebox.css"}
     %link{rel: "stylesheet", href: "/duckie.css"}
 
   %body
@@ -59,8 +58,8 @@
         #result
           .frame-outer.zoom
             .frame-inner
-              %a.photo{rel: "facebox", href: "/spacer.gif"}
-                %img.photo.lazy{"data-original" => "/spacer.gif", src: "/spacer.gif", alt: "result"}
+              %a.photo{href: "/spacer.gif"}
+                %img.photo.lazy{src: "/spacer.gif", alt: "result"}
       %h3#no-results
         No unsafe photos related to &ldquo;<span class="query"></span>&rdquo;
       %h3#broken
@@ -77,6 +76,5 @@
         Rule 34
 
     %script{src: "https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"}
-    %script{src: "/facebox.js"}
     %script{src: "/jquery.lazyload.min.js"}
     %script{src: "/duckie.js"}
