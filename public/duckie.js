@@ -181,8 +181,8 @@ Duckie = {
 
   _showResult: function(index, value) {
     var result = $(Duckie._template);
-    result.find('a.photo').attr('href', value.full_size);
-    result.find('a.photo img.photo').attr('src', value.thumbnail);
+    result.find('a.photo').attr('href', value.url);
+    result.find('a.photo img.photo').attr('src', value.url);
     result.appendTo('#results');
   },
 };

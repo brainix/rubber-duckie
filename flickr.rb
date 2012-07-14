@@ -55,8 +55,7 @@ module Flickr
         puts '1. Load: ' + auth_url
         puts '2. Authorize Rubber Duckie'
         puts '3. Copy/paste the authorization number here:'
-        verifier = gets.strip
-        verifier
+        gets.strip
       end
 
       def log_in(token, verifier)
@@ -90,8 +89,7 @@ module Flickr
         FlickRaw.shared_secret = API_SECRET
         flickr.access_token = ACCESS_TOKEN
         flickr.access_secret = ACCESS_SECRET
-        login = flickr.test.login
-        login
+        flickr.test.login
       end
 
       def unsafe_search(query)
@@ -109,8 +107,7 @@ module Flickr
           rated_pg13_only = rated_pg13 - rated_pg
           results = rated_r_only + rated_pg13_only
           results = results[0 .. MAX_RESULTS - 1]
-          results = ids_to_urls(results)
-          results.map! { |result| { thumbnail: result, full_size: result } }
+          results = ids_to_info(results)
         end
         @@logger.info("#{query}: got #{results.size} Rated R and PG-13 photos in #{'%.2f' % time} seconds")
         results
@@ -123,24 +120,27 @@ module Flickr
           safe_search: MPAA_RATING_TO_FLICKR_SAFE_SEARCH_VALUE[mpaa_rating],
           per_page: '500',
         )
-        ids = results.map { |result| result['id'] }
-        ids
+        results.map { |result| result['id'] }
       end
 
-      def ids_to_urls(ids)
-        threads, urls = [], []
+      def ids_to_info(ids)
+        threads, results = [], []
         (0 .. ids.size - 1).each do |index|
           threads << Thread.new do
             info = flickr.photos.getInfo(photo_id: ids[index])
-            url = FlickRaw.url(info)
-            Thread.current[:output] = url
+            result = {
+              title: info.title,
+              description: info.description,
+              url: FlickRaw.url(info),
+            }
+            Thread.current[:output] = result
           end
         end
         threads.each do |thread|
           thread.join
-          urls << thread[:output]
+          results << thread[:output]
         end
-        urls
+        results
       end
     end
   end
@@ -150,6 +150,5 @@ end
 if __FILE__ == $0
   query = ARGV.join(' ')
   Flickr::Search.log_in
-  photos = puts Flickr::Search.unsafe_search(query)
-  photos
+  puts Flickr::Search.unsafe_search(query)
 end
