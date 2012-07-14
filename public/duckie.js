@@ -37,6 +37,7 @@ Duckie = {
     ['sand', 'naked girl with sand handprints on her tits and pussy'],
     ['sandal', 'man with a sandal hanging off his erection'],
     ['scissors', 'naked girl on the left, and a shadow of scissors on the right, illustrating symmetry'],
+    ['Snow White', 'buxom girl in a Snow White costume and apple pasties'],
     ['sweater', 'girl wearing a sweater, giving a handjob'],
     ['tweezers', 'topless girl in a bandana, pulling down her pants and tweezing her pubes'],
     ['umbrella', 'girl penetrating herself with an umbrella'],
