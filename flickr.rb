@@ -129,8 +129,8 @@ module Flickr
           threads << Thread.new do
             info = flickr.photos.getInfo(photo_id: ids[index])
             result = {
-              title: info.title,
-              description: info.description,
+              # title: info.title,
+              # description: info.description,
               url: FlickRaw.url(info),
             }
             Thread.current[:output] = result
