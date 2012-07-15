@@ -59,8 +59,8 @@
         #result
           .frame-outer
             .frame-inner
-              %a.photo{href: "/spacer.gif", rel: "lightbox[duckie]"}
-                %img.photo.lazy{src: "/spacer.gif", alt: "result"}
+              %a.photo{href: "/spacer.gif", rel: "lightbox[duckie]", title: "result"}
+                %img.photo.lazy{src: "/spacer.gif", "data-original" => "/spacer.gif", alt: "result"}
       %h3#no-results
         No unsafe photos related to &ldquo;<span class="query"></span>&rdquo;
       %h3#broken

@@ -49,6 +49,7 @@ Duckie = {
   _TIMEOUT: 10000,
 
   _template: null,
+  _query: '',
   _timer: null,
   _jqXHR: null,
 
@@ -93,21 +94,20 @@ Duckie = {
 
   _doSearch: function(query) {
     $("[name='query']").val(query);
-    Duckie._search();
+    this._search();
   },
 
 
   _search: function() {
-    var query = $("[name='query']").val();
-    query = query.trim().replace(/ +/g, ' ');
-    if (!query) {
+    Duckie._query = $("[name='query']").val().trim().replace(/ +/g, ' ');
+    if (!Duckie._query) {
       return false;
     }
 
     Duckie._abortSearch();
-    Duckie._preSearch(query);
+    Duckie._preSearch();
     Duckie._timer = window.setTimeout(Duckie._brokenSearch, Duckie._TIMEOUT);
-    Duckie._jqXHR = $.getJSON('/search', {query: query}, function(data) {
+    Duckie._jqXHR = $.getJSON('/search', {query: Duckie._query}, function(data) {
       Duckie._abortSearch();
       Duckie._postSearch(data);
     });
@@ -148,10 +148,10 @@ Duckie = {
   },
 
 
-  _preSearch: function(query) {
-    location.replace('#' + encodeURIComponent(query));
-    document.title = 'Rubber Duckie - ' + query;
-    $('.query').html(query);
+  _preSearch: function() {
+    location.replace('#' + encodeURIComponent(this._query));
+    document.title = 'Rubber Duckie - ' + this._query;
+    $('.query').html(this._query);
     $("[name='query']").val('');
 
     $('#loading').show();
@@ -182,7 +182,8 @@ Duckie = {
   _showResult: function(index, value) {
     var result = $(Duckie._template);
     result.find('a.photo').attr('href', value.url);
-    result.find('a.photo img.photo').attr('src', value.url);
+    result.find('a.photo').attr('title', Duckie._query);
+    result.find('a.photo img.photo').attr('data-original', value.url);
     result.appendTo('#results');
   },
 };
