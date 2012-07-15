@@ -55,12 +55,12 @@ Duckie = {
 
 
   init: function() {
-    this._showExample();
     $('#loading').hide();
+    this._showExample();
 
     // Get the photo result template.
     this._template = $('#result').remove().html();
-    $('#templates').remove()
+    $('#templates').remove();
 
     // Wire up the event handlers.
     $('.home').click(this._wtf);
