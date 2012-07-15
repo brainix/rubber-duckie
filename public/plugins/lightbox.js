@@ -48,7 +48,7 @@ lightbox = new Lightbox options
   LightboxOptions = (function() {
 
     function LightboxOptions() {
-      this.fileLoadingImage = '/spinner.png';
+      this.fileLoadingImage = '/spacer.gif';
       this.fileCloseImage = '/plugins/close.png';
       this.resizeDuration = 700;
       this.fadeDuration = 500;
