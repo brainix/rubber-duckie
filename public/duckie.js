@@ -93,7 +93,7 @@ Duckie = {
 
 
   _doSearch: function(query) {
-    $("[name='query']").val(query);
+    $("[name='query']").val(query).focus();
     this._search();
   },
 
