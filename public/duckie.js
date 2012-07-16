@@ -135,7 +135,7 @@ Duckie = {
     location.replace('#');
     document.title = 'Rubber Duckie - Unsafe Photo Search';
     $('.query').html('Unsafe Photo Search');
-    $("[name='query']").val('');
+    $("[name='query']").val('').focus();
 
     $('#loading').hide();
     $('#wtf').show();
