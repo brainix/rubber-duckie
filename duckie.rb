@@ -27,11 +27,10 @@ load 'cache.rb'
 load 'flickr.rb'
 
 
-set :haml, :format => :html5
-Flickr::Search.log_in
-
-
 configure do
+  set :haml, :format => :html5
+  Flickr::Search.log_in
+
   url = ENV['REDISTOGO_URL'] || 'http://localhost:6379/'
   uri = URI.parse(url)
   REDIS = Redis.new(host: uri.host, port: uri.port, password: uri.password)
